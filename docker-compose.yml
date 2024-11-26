@@ -1,0 +1,99 @@
+services:
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"       # Порт для протокола AMQP
+      - "15672:15672"     # Порт для графического интерфейса
+    environment:
+      RABBITMQ_DEFAULT_USER: user   # Задайте логин
+      RABBITMQ_DEFAULT_PASS: user1234 # Задайте пароль
+    healthcheck:
+        test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
+        interval: 10s
+        timeout: 5s
+        retries: 5
+    networks:
+      - app-network
+
+  server-a:
+    build:
+      context: ./server-a
+    ports:
+      - "3001:3001"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: user
+      RABBITMQ_PASS: user1234
+    networks:
+      - app-network
+
+  server-b:
+    build:
+      context: ./server-b
+    ports:
+      - "3002:3002"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: user
+      RABBITMQ_PASS: user1234
+    networks:
+      - app-network
+
+  server-c:
+    build:
+      context: ./server-c
+    ports:
+      - "3008:3008"
+    depends_on:
+       server-e:
+         condition: service_started
+       rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  server-d:
+    build:
+      context: ./server-d
+    ports:
+      - "3010:3003"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  server-e:
+    build:
+      context: ./server-e
+    ports:
+      - "4000:3004"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/news-aggregator-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server-a
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+

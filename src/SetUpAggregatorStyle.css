@@ -1,0 +1,102 @@
+*{
+    box-sizing: border-box;
+}
+
+.news-aggregator {
+    background-color: #f5f9f6; /* светло-зеленый оттенок для фона */
+    padding: 24px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 ;
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.1); /* легкая зеленая тень */
+    font-family: Arial, sans-serif;
+}
+
+.news-aggregator h1 {
+    font-size: 1.6em;
+    color: #006d3b; /* темно-зеленый цвет для заголовка */
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.news-aggregator p {
+    color: #3c7f57; /* насыщенный зеленый для текста */
+    font-weight: 500;
+    margin-bottom: 12px;
+    font-size: 1em;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Два столбца для чекбоксов */
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.checkbox-item:hover {
+    background-color: #eaf7eb; /* Подсветка при наведении */
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #32a852; /* зеленый цвет для чекбоксов */
+    margin-right: 8px;
+}
+
+.checkbox-item label {
+    font-size: 1em;
+    color: #3c7f57;
+}
+
+.news-aggregator label {
+    display: block;
+    color: #3c7f57;
+    font-size: 0.9em;
+    margin-top: 12px;
+}
+
+.news-aggregator input[type="email"],
+.news-aggregator select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #a0d4b4; /* светло-зеленая рамка */
+    border-radius: 6px;
+    margin-top: 6px;
+    font-size: 1em;
+    background-color: #ffffff;
+    transition: border-color 0.3s;
+}
+
+.news-aggregator input[type="email"]:focus,
+.news-aggregator select:focus {
+    border-color: #32a852; /* ярко-зеленая рамка при фокусе */
+    outline: none;
+}
+
+.news-aggregator button {
+    width: 100%;
+    padding: 12px;
+    background-color: #32a852; /* яркий зеленый цвет */
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 16px;
+}
+
+.news-aggregator button:hover {
+    background-color: #288e43; /* более темный зеленый при наведении */
+}

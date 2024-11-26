@@ -1,0 +1,47 @@
+*{
+    box-sizing: border-box;
+}
+
+.user-preference {
+    background-color: #f5f9f6; /* светло-зеленый оттенок для фона */
+    padding: 24px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 ; /* отступ сверху и снизу */
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.1); /* легкая зеленая тень */
+    font-family: Arial, sans-serif;
+}
+
+.user-preference h2 {
+    font-size: 1.4em;
+    color: #006d3b; /* темно-зеленый цвет для заголовка */
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.user-preference p {
+    color: #3c7f57; /* насыщенный зеленый цвет для текста */
+    font-size: 1em;
+    padding: 8px 0; /* Вместо margin создаем отступ через padding */
+    margin: 0; /* Убираем margin, чтобы избежать коллапса */
+}
+
+.user-preference .label {
+    font-weight: 600;
+    color: #228b22; /* акцент на значениях */
+}
+
+.user-preference .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.user-preference .category-item {
+    background-color: #eaf7eb; /* фон для каждой категории */
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #006d3b;
+}
