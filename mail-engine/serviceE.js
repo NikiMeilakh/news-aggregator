@@ -1,0 +1,66 @@
+const nodemailer = require('nodemailer');
+const express=require('express');
+const cors=require('cors');
+const TelegramBot = require('node-telegram-bot-api');
+const app=express();
+
+const token= "7770891228:AAHnK1uXBvCtNzM5-0yRTU730kA0Y3_8FtU";
+const bot = new TelegramBot(token, { polling: true });
+const mailKey=process.env.REACT_APP_MAIL_KEY;
+
+app.use(cors());
+app.use(express.json())
+const port=4000;
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'nirskiy@gmail.com',
+        pass: mailKey||'hsvychodwtkzvkxn'
+    }
+});
+
+app.post('/SMTP', async(req,res)=>{
+const {news, email, telegramId}=req.body;
+    console.log(news)
+
+
+    let message = 'Hello! Its demo test for news aggregator from Nikita Meilakhshtein:\n\n';
+    news.forEach((item, index) => {
+        message += `${index + 1}. ${item.source.name}\n${item.description}\n${item.url}\n\n`;
+    });
+    if(news.length===0){
+        message+='Where are no news according yours subject:('
+    }
+
+    const mailOptions = {
+        from: 'nirskiyl@gmail.com',
+        to: email,
+        subject: 'Your news aggregator',
+        text: message,
+    };
+    try{
+    await transporter.sendMail(mailOptions);
+    console.log('Email was successfully sent!');}
+    catch(e){
+        console.log(e.message)
+    }
+    if(telegramId){
+        let messageForTelegram='Hello! Its demo test for news aggregator from Nikita Meilakhshtein:\n\n';
+        news.slice(0, 10).forEach((item, index) => {
+            messageForTelegram += `${index + 1}. ${item.source.name}\n${item.description}\n${item.url}\n\n`;
+        });
+        if(news.length===0){
+            messageForTelegram+='Where are no news according yours subject:('
+        }
+
+        bot.sendMessage(telegramId, messageForTelegram)
+            .then(() => console.log('Message was sent to telegram!'))
+            .catch(err => console.error('Error with sending message to telegram:', err));
+    }
+    res.status(201).json({message:"Email successfully was sent to user!"})
+})
+
+app.listen(port, ()=>console.log('Service E listening on port 3004'));
+
+

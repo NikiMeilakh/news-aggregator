@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const amqp = require('amqplib');
+const apiKey=process.env.REACT_APP_MONGO_KEY||"T62JwPKwnSIcR0C3";
 
-
-mongoose.connect('mongodb+srv://nirskiy_demo:T62JwPKwnSIcR0C3@cluster0.8kaac.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect(`mongodb+srv://nirskiy_demo:${apiKey}@cluster0.8kaac.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => console.log('MongoDB connected'))
@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true },
     categories: { type: [String], required: true },
     language: { type: String, required: true },
+    telegramId: { type: String, required: false },
 });
 
 const User = mongoose.model('User', userSchema);
@@ -23,6 +24,7 @@ const addOrReplaceUser = async (userData) => {
             existingUser.email = userData.email;
             existingUser.categories = userData.categories;
             existingUser.language = userData.language;
+            existingUser.telegramId = userData.telegramId;
             await existingUser.save();
             return { message: 'User updated', user: existingUser };
         } else {
@@ -34,6 +36,42 @@ const addOrReplaceUser = async (userData) => {
         throw new Error(`Error adding or updating user: ${error.message}`);
     }
 };
+
+const watchUsers = () => {
+    const changeStream = User.watch();
+
+    changeStream.on('change', async (change) => {
+        console.log('Change detected:', change);
+        try {
+            if (change.operationType === 'insert'|| change.operationType === 'update') {
+                const newUser = await User.findById(change.documentKey._id);
+                console.log('New user:', newUser)
+                await callManager(newUser);
+        }
+        } catch (e) {
+            console.log(e)
+        }
+    })
+}
+
+watchUsers();
+
+ async function callManager(newUser){
+    try {
+        const connection = await amqp.connect('amqp://user:user1234@rabbitmq:5672/');
+        const channel = await connection.createChannel();
+        await channel.assertQueue('toManager',{ durable: true })
+        await channel.sendToQueue('toManager',Buffer.from(JSON.stringify(newUser)),{
+            persistent: true
+        })
+        console.log(`Message send to queue "toManager" with message ${JSON.stringify(newUser)}`);
+        await channel.close();
+        await connection.close();
+    } catch (error) {
+        console.error('Failed to connect to RabbitMQ:', error);
+    }
+}
+
 
 async function receiveRabbitMq() {
          try{

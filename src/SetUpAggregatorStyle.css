@@ -3,25 +3,25 @@
 }
 
 .news-aggregator {
-    background-color: #f5f9f6; /* светло-зеленый оттенок для фона */
+    background-color: #f5f9f6;
     padding: 24px;
     border-radius: 8px;
     width: 100%;
     max-width: 400px;
     margin: 0 ;
-    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.1); /* легкая зеленая тень */
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.1);
     font-family: Arial, sans-serif;
 }
 
 .news-aggregator h1 {
     font-size: 1.6em;
-    color: #006d3b; /* темно-зеленый цвет для заголовка */
+    color: #006d3b;
     text-align: center;
     margin-bottom: 16px;
 }
 
 .news-aggregator p {
-    color: #3c7f57; /* насыщенный зеленый для текста */
+    color: #3c7f57;
     font-weight: 500;
     margin-bottom: 12px;
     font-size: 1em;
@@ -29,7 +29,7 @@
 
 .checkbox-group {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Два столбца для чекбоксов */
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-bottom: 16px;
 }
@@ -43,13 +43,13 @@
 }
 
 .checkbox-item:hover {
-    background-color: #eaf7eb; /* Подсветка при наведении */
+    background-color: #eaf7eb;
 }
 
 .checkbox-item input[type="checkbox"] {
     width: 20px;
     height: 20px;
-    accent-color: #32a852; /* зеленый цвет для чекбоксов */
+    accent-color: #32a852;
     margin-right: 8px;
 }
 
@@ -66,10 +66,11 @@
 }
 
 .news-aggregator input[type="email"],
+.news-aggregator input[type="number"],
 .news-aggregator select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #a0d4b4; /* светло-зеленая рамка */
+    border: 1px solid #a0d4b4;
     border-radius: 6px;
     margin-top: 6px;
     font-size: 1em;
@@ -78,15 +79,16 @@
 }
 
 .news-aggregator input[type="email"]:focus,
+.news-aggregator input[type="number"]:focus,
 .news-aggregator select:focus {
-    border-color: #32a852; /* ярко-зеленая рамка при фокусе */
+    border-color: #32a852;
     outline: none;
 }
 
 .news-aggregator button {
     width: 100%;
     padding: 12px;
-    background-color: #32a852; /* яркий зеленый цвет */
+    background-color: #32a852;
     border: none;
     border-radius: 6px;
     color: white;
@@ -97,6 +99,25 @@
     margin-top: 16px;
 }
 
+.news-aggregator label {
+    display: inline-block;
+    color: #3c7f57;
+    font-size: 0.9em;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+.label-with-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label-with-info span {
+    font-size: 1.2em;
+    transform: scale(1.2);
+}
+
 .news-aggregator button:hover {
-    background-color: #288e43; /* более темный зеленый при наведении */
+    background-color: #288e43;
 }

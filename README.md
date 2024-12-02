@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# News aggregator application
+Hello! it's my new news aggregator application, and you can test it right now.
+Everything what you need is download file with application on your computer,
+install node_modules(npm install) and run it using command 'docker compose up --build'.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# What is the purpose of application?
+It's very easy, the purpose of my application is delivering fresh news to you as soon as possible.
+You have a simple interface that let your choose interesting news categories, country and
+preferable communication channel. After it you push the button "get my news" and your
+news selection sending to email or telegram, it depends only on your wishes.
+Look at this beautiful and minimalistic modern interface!
+[Main interface](./news_aggregator_prsentation/Application_view.png)
 
-## Available Scripts
+# Whats technologies does it consist?
+My application has really advanced technologies like state management, queueing , database connection, 
+and 5 microservices with clear structure for future scalable. Also, it covered in docker compose which let your
+run and deploy my application on every computer using only one command.
+It's time to look at the scheme of interaction between application parts
+[Application scheme](./news_aggregator_prsentation/Application%20scheme.png)
 
-In the project directory, you can run:
+# How to run my application?
+1. Clone the repository on your local machine https://github.com/NikiMeilakh/news-aggregator.git
+2. Change directory to the project root 'cd news-aggregator'
+3. Install dependencies 'npm install'
+4. Open docker application on your machine
+5. Enter in terminal command 'docker compose up --build'
+6. Open in web browser http://localhost:3000 and enjoy the project:)
 
-### `npm start`
+# How to test my application?
+You can do it after run it on your computer and open interface on http://localhost:3000. Application will work
+and send you email or telegram messages.
+Or you can use News_aggregator_test.postman_collection for test it without interaction with interface,
+but I highly recommended to check out it UI part!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## See you soon
+I am looking forward to show you everything in details on our defence day meeting. 
+I have already prepared a special presentation. See you soon!
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

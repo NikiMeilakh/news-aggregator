@@ -1,0 +1,38 @@
+{
+	"info": {
+		"_postman_id": "21bda5bf-a6f6-4e25-b936-c5c7b78543e4",
+		"name": "News_aggregator_test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36777863"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3001/manager",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"myMail@gmail.com\",\n    \"selectedCategories\":[\"general\"],\n    \"selectedLanguage\":\"us\",\n    \"telegramId\":\"111111\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/manager",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"manager"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

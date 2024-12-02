@@ -9,6 +9,7 @@ const preferenceSlice=createSlice({
             language: ''
         },
         email: '',
+        telegramId:'',
     },
 
     reducers:{
@@ -21,7 +22,11 @@ state.preferences={
         setEmail(state,action){
             state.email=action.payload
         },
+        setTelegramId(state,action){
+            state.telegramId=action.payload;
+        }
     }
 })
- export const{setPreferences,setEmail}=preferenceSlice.actions;
+ export const{setPreferences,setEmail,
+ setTelegramId}=preferenceSlice.actions;
 export default preferenceSlice.reducer;

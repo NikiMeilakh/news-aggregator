@@ -4,6 +4,7 @@ import './YourCurrentSettingsStyle.css';
 function YourCurrentSettings(){
     const preferences=useSelector(state=>state.preference.preferences)
     const email=useSelector(state=>state.preference.email);
+    const telegramId=useSelector(state=>state.preference.telegramId);
 
     return (
         <div className="user-preference">
@@ -16,8 +17,10 @@ function YourCurrentSettings(){
                 ))}
             </div>
 
-            <p><span className="label">Language:</span> {preferences.language}</p>
+            <p><span className="label">Country:</span> {preferences.language}</p>
             <p><span className="label">Email:</span> {email}</p>
+            <p><span className="label">Telegram ID:</span> {telegramId}</p>
+
         </div>
     )
 }

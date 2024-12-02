@@ -7,11 +7,13 @@ const port = 3001;
 app.use(express.json());
 app.use(cors());
 
-const connectRabbitMQ = async (email,selectedCategories,selectedLanguage) => {
+const connectRabbitMQ = async (email,selectedCategories,selectedLanguage, telegramId) => {
     const message={
         email: email,
         categories: selectedCategories,
-        language: selectedLanguage}
+        language: selectedLanguage,
+        telegramId: telegramId
+    }
     try {
         const connection = await amqp.connect('amqp://user:user1234@rabbitmq:5672/');
         const channel = await connection.createChannel();
@@ -28,17 +30,19 @@ const connectRabbitMQ = async (email,selectedCategories,selectedLanguage) => {
 };
 
 app.post('/manager', async (req, res) => {
-    const { email, selectedCategories, selectedLanguage } = req.body;
-
+    const { email, selectedCategories, selectedLanguage, telegramId } = req.body;
+    if(email&&selectedCategories&&selectedLanguage){
     try {
-        await connectRabbitMQ(email, selectedCategories, selectedLanguage);
+        await connectRabbitMQ(email, selectedCategories, selectedLanguage, telegramId);
         console.log("Message successfully queued");
         res.status(201).json({ message: 'Message successfully queued' });
     } catch (error) {
         console.error("Failed to queue message:", error);
         res.status(500).json({ error: 'Failed to queue message' });
-    }
+    }}
+    else{ res.status(500).json({ message: 'Email, categories and language are required' });}
 });
+
 app.listen(port,()=> console.log('ServiceA listening port 3001'));
 
 module.exports=app;

@@ -4,11 +4,11 @@ services:
     image: rabbitmq:management
     container_name: rabbitmq
     ports:
-      - "5672:5672"       # Порт для протокола AMQP
-      - "15672:15672"     # Порт для графического интерфейса
+      - "5672:5672"
+      - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: user   # Задайте логин
-      RABBITMQ_DEFAULT_PASS: user1234 # Задайте пароль
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: user1234
     healthcheck:
         test: [ "CMD", "rabbitmq-diagnostics", "ping" ]
         interval: 10s
@@ -19,7 +19,7 @@ services:
 
   server-a:
     build:
-      context: ./server-a
+      context: ./controller
     ports:
       - "3001:3001"
     depends_on:
@@ -35,7 +35,7 @@ services:
 
   server-b:
     build:
-      context: ./server-b
+      context: ./db-accessor
     ports:
       - "3002:3002"
     depends_on:
@@ -51,7 +51,7 @@ services:
 
   server-c:
     build:
-      context: ./server-c
+      context: ./manager
     ports:
       - "3008:3008"
     depends_on:
@@ -64,7 +64,7 @@ services:
 
   server-d:
     build:
-      context: ./server-d
+      context: ./api-accessor
     ports:
       - "3010:3003"
     depends_on:
@@ -75,7 +75,7 @@ services:
 
   server-e:
     build:
-      context: ./server-e
+      context: ./mail-engine
     ports:
       - "4000:3004"
     networks:
