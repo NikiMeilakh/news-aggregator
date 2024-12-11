@@ -2,11 +2,29 @@ const mongoose = require('mongoose');
 const amqp = require('amqplib');
 const apiKey=process.env.REACT_APP_MONGO_KEY||"T62JwPKwnSIcR0C3";
 
-mongoose.connect(`mongodb+srv://nirskiy_demo:${apiKey}@cluster0.8kaac.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => console.log('MongoDB connected'))
-    .catch(err => console.error('MongoDB connection error:', err));
+
+const mongoseConnection=()=>{
+    mongoose.connect(`mongodb+srv://nirskiy_demo:${apiKey}@cluster0.8kaac.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 10000,
+        socketTimeoutMS: 45000,
+    }).then(() => console.log('MongoDB connected'))
+        .catch(err => {console.error('MongoDB connection error:', err)
+            console.log('Retrying connection in 5 seconds...');
+            setTimeout(mongoseConnection, 5000);
+        });
+}
+
+mongoseConnection()
+
+mongoose.connection.on('disconnected', () => {
+    console.warn('Mongoose connection disconnected');
+    setTimeout(() => {
+        console.log('Retrying MongoDB connection...');
+        mongoseConnection();
+    }, 5000);
+});
 
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true },

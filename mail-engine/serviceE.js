@@ -2,15 +2,19 @@ const nodemailer = require('nodemailer');
 const express=require('express');
 const cors=require('cors');
 const TelegramBot = require('node-telegram-bot-api');
+const { CohereClientV2 } = require('cohere-ai');
 const app=express();
+app.use(cors());
+app.use(express.json())
+const port=4000;
+
+const cohere = new CohereClientV2({
+    token: 'WW9uJcdWCTQe2BV7XLBfOjX1ZtYSKzbV6D0x8QYn',
+});
 
 const token= "7770891228:AAHnK1uXBvCtNzM5-0yRTU730kA0Y3_8FtU";
 const bot = new TelegramBot(token, { polling: true });
 const mailKey=process.env.REACT_APP_MAIL_KEY;
-
-app.use(cors());
-app.use(express.json())
-const port=4000;
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -19,6 +23,25 @@ const transporter = nodemailer.createTransport({
         pass: mailKey||'hsvychodwtkzvkxn'
     }
 });
+
+async function aiAnalytics(message){
+    try {
+        const response = await cohere.chat({
+            model: 'command-r-plus-08-2024',
+            messages: [
+                {
+                    role: 'user',
+                    content: `Please summarize the following news and write a short summary: ${message}`,
+                },
+            ],
+        });
+        console.log(response)
+        return response.message.content[0].text
+    }catch (e) {
+        console.log(`AI error: ${e}`)
+        return "AI service is not available now"
+    }
+}
 
 app.post('/SMTP', async(req,res)=>{
 const {news, email, telegramId}=req.body;
@@ -32,6 +55,17 @@ const {news, email, telegramId}=req.body;
     if(news.length===0){
         message+='Where are no news according yours subject:('
     }
+
+    let aiResume="";
+if(news.length!==0) {
+    let messageForAI = '';
+    news.forEach((item, index) => {
+        messageForAI += `${index + 1}. ${item.content}\n\n`;
+        console.log(item.content +"$$$$$$$$$$$$$$$$")
+    });
+    aiResume=await aiAnalytics(messageForAI);
+    message+=`Ai extract: ${aiResume}`
+}
 
     const mailOptions = {
         from: 'nirskiyl@gmail.com',
@@ -57,6 +91,9 @@ const {news, email, telegramId}=req.body;
         bot.sendMessage(telegramId, messageForTelegram)
             .then(() => console.log('Message was sent to telegram!'))
             .catch(err => console.error('Error with sending message to telegram:', err));
+        bot.sendMessage(telegramId, aiResume)
+            .then(() => console.log('Message with AI summary was sent to telegram!'))
+            .catch(err => console.error('Error with sending AI summary message to telegram:', err));
     }
     res.status(201).json({message:"Email successfully was sent to user!"})
 })
