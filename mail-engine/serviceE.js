@@ -7,20 +7,22 @@ const app=express();
 app.use(cors());
 app.use(express.json())
 const port=4000;
+const cohereToken=process.env.COHERE_TOKEN;
+const mailUser=process.env.MAIL_USER;
 
 const cohere = new CohereClientV2({
-    token: 'WW9uJcdWCTQe2BV7XLBfOjX1ZtYSKzbV6D0x8QYn',
+    token: cohereToken,
 });
 
-const token= "7770891228:AAHnK1uXBvCtNzM5-0yRTU730kA0Y3_8FtU";
-const bot = new TelegramBot(token, { polling: true });
+const telegramToken= process.env.TELEGRAM_TOKEN;
+const bot = new TelegramBot(telegramToken, { polling: true });
 const mailKey=process.env.REACT_APP_MAIL_KEY;
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'nirskiy@gmail.com',
-        pass: mailKey||'hsvychodwtkzvkxn'
+        user: mailUser,
+        pass: mailKey
     }
 });
 
@@ -68,7 +70,7 @@ if(news.length!==0) {
 }
 
     const mailOptions = {
-        from: 'nirskiyl@gmail.com',
+        from: mailUser,
         to: email,
         subject: 'Your news aggregator',
         text: message,
