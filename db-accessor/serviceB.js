@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const amqp = require('amqplib');
-const apiKey=process.env.REACT_APP_MONGO_KEY||"T62JwPKwnSIcR0C3";
+const apiKey=process.env.REACT_APP_MONGO_KEY;
 
 
 const mongoseConnection=()=>{
