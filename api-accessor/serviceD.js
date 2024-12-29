@@ -1,6 +1,6 @@
 const amqp = require('amqplib');
 
-const apiKey= "347d629c98c54dbcb681c97d113af615";
+const apiKey=process.env.API_KEY;
 
 async function responseToApi(categories, language) {
      const myNews=[];
